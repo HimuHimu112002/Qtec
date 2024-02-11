@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row,Modal,Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import RootLayOut from '../components/RootLayOut';
 import { getDatabase, ref, onValue, push, set,update ,remove } from "firebase/database";
 import { AiFillDelete } from 'react-icons/ai';
 import Swal from 'sweetalert2'
-import InputGroup from 'react-bootstrap/InputGroup';
+import { BiPencil } from 'react-icons/bi';
+
 const AllTask = () => {
 
   const db = getDatabase()
   const [UiShow, setUiShow] = useState([]);
   const [CompletedUiShow, setCompletedDataUiShow] = useState([]);
   const [IncompletedUiShow, setIncompletedUiShow] = useState([]);
-  const [status, seStatus] = useState("");
+  let [modelShow, setmodelShow] = useState(false)
   let [SearchArray, setSearchArray] = useState([])
-  console.log(SearchArray)
+  let [Id, setid] = useState(false)
+  let [updateTask, setUpdateTask] = useState("")
   // Show All task
   useEffect(()=>{
     onValue(ref(db, 'task/'), (snapshot) => {
@@ -114,12 +115,32 @@ const AllTask = () => {
       setSearchArray([])
     }else{
       UiShow.filter((item)=>{
-        if(item.priority.toLowerCase().includes(e.target.value.toLowerCase())){
+        if(item.title.toLowerCase().includes(e.target.value.toLowerCase())){
             SearchFilterArray.push(item)
             setSearchArray(SearchFilterArray)
         }
       })
     }
+  }
+
+  let handleTaskEdit = (e) =>{
+    setUpdateTask(e.target.value)
+  }
+
+  let handleUpdateTask = (id)=>{
+    setid(id)
+    setmodelShow(true)
+  }
+  
+  let handleClose = ()=>{
+    setmodelShow(false)
+    update(ref(db, 'task/' + Id), {
+      title:updateTask,
+    })
+  }
+  
+  let modelcansel =()=>{
+    setmodelShow(false)
   }
   return (
     <>
@@ -154,8 +175,8 @@ const AllTask = () => {
           </Col>
 
           <Col md='9' className='py-3'>
-          <h4>Search Here</h4>
-          <input onChange={handleUserListSearch} className='mt-2 px-2 py-3' type="text" placeholder='Search'></input>
+          <h4>Search task discriptions Here</h4>
+          <input onChange={handleUserListSearch} className='mt-2 px-5 py-3' type="text" placeholder='Search'></input>
 
             {SearchArray.length > 0
             ?
@@ -163,9 +184,11 @@ const AllTask = () => {
               <Card className='mt-3' key={i} style={{ width: 'auto' }}>
                 <Card.Body>
                   <div className='blog__Heading'>
-                    <h4>Task Discription</h4>
-                    <h4 className='mx-2 bg-info px-2 py-1 rounded'>{item.status}</h4>
-                    <p onClick={()=>handleDelete(item.id)} className='TaskdeleteButton bg-danger px-3 py-1 m-auto text-white rounded'><AiFillDelete/></p>
+                    <h4>{i+1} = Task Discription</h4>
+                    <h4 className='mx-2 bg-info px-4 py-1 rounded text-white'>{item.status}</h4>
+                    <p onClick={()=>handleUpdateTask(item.id)} className='TaskEditeButton bg-info px-3 py-1 m-auto text-white rounded'><BiPencil/></p>
+
+                    <p onClick={()=>handleDelete(item.id)} className='TaskdeleteButton bg-info px-3 py-1 m-auto text-white rounded'><AiFillDelete/></p>
                   </div>
 
                   <p>{item.title}</p>
@@ -188,9 +211,11 @@ const AllTask = () => {
                 <Card className='mt-3' key={i} style={{ width: 'auto' }}>
                   <Card.Body>
                     <div className='blog__Heading'>
-                      <h4>Task Discription</h4>
-                      <h4 className='mx-2 bg-info px-2 py-1 rounded'>{item.status}</h4>
+                      <h4> {i+1} = Task Discription</h4>
+                      <h4 className='mx-2 bg-info px-4 py-2 rounded text-white'>{item.status}</h4>
                       <p onClick={()=>handleDelete(item.id)} className='TaskdeleteButton bg-danger px-3 py-1 m-auto text-white rounded'><AiFillDelete/></p>
+
+                      <p onClick={()=>handleUpdateTask(item.id)} className='TaskEditeButton bg-danger px-3 py-1 m-auto text-white rounded'><BiPencil/></p>
                     </div>
 
                     <p>{item.title}</p>
@@ -209,7 +234,29 @@ const AllTask = () => {
                 </Card>
             )))
             }
+            <Modal show={modelShow} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Write updating task discriptions</Modal.Title>
+              </Modal.Header>
 
+              <Modal.Body>
+                <Form.Group className="mb-3" controlId="formBasictext">
+                  <Form.Label>Updating Task.</Form.Label>
+                  <Form.Control onChange={handleTaskEdit} type="text"/>
+                </Form.Group>
+              </Modal.Body>
+
+              <Modal.Footer className='d-flex justify-content-center mb-2'>       
+                <Button variant="success" onClick={handleClose}>
+                  Update
+                </Button>
+
+                <Button className='bg-danger' variant="secondary" onClick={modelcansel}>
+                  Cancel
+                </Button>
+              </Modal.Footer>
+
+            </Modal>
           </Col>
         </Row>
       </Container>

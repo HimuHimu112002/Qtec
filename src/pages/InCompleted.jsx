@@ -57,7 +57,7 @@ const InCompleted = () => {
                 <Card.Body>
                   <div className='blog__Heading'>
                     <h4>Task Discription</h4>
-                      <h4 className='mx-2 bg-info px-2 py-1 rounded'>InCompleted</h4>
+                      <h4 className='mx-2 bg-info px-4 text-white py-1 rounded'>InCompleted</h4>
                     <p onClick={()=>handleDelete(item.id)} className='TaskdeleteButton bg-danger px-3 py-1 m-auto text-white rounded'><AiFillDelete/></p>
                   </div>
                   <p>{item.title}</p>

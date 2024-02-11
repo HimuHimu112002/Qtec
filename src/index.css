@@ -23,18 +23,20 @@ a{
   transition: .3s all ease-in-out;
   cursor: pointer;
 }
-/* .sideBar__layout--designContent:hover{
-  background-color: black;
-  color: white;
-} */
 
 .blog__Heading{
   display: flex;
   position: relative;
 }
-.TaskdeleteButton{
+.TaskdeleteButton, .TaskEditeButton{
   position: absolute;
   top: 0;
   right: 0;
   cursor: pointer;
+}
+
+.TaskdeleteButton{
+  top: 0;
+  right: 60px;
+
 }
