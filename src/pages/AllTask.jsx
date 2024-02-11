@@ -115,7 +115,7 @@ const AllTask = () => {
       setSearchArray([])
     }else{
       UiShow.filter((item)=>{
-        if(item.title.toLowerCase().includes(e.target.value.toLowerCase())){
+        if(item.priority.toLowerCase().includes(e.target.value.toLowerCase())){
             SearchFilterArray.push(item)
             setSearchArray(SearchFilterArray)
         }

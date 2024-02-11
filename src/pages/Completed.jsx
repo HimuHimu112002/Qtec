@@ -51,10 +51,9 @@ const Completed = () => {
     <RootLayOut/>
       <Container>
         <Row>
-          {UiShow.map((item,i)=>(
-
-            <Col key={i} className='py-3'>
-              <Card style={{ width: 'auto' }}>
+            <Col className='py-3'>
+              {UiShow.map((item,i)=>(
+              <Card className='mt-3' key={i} style={{ width: 'auto' }}>
                 <Card.Body>
                   <div className='blog__Heading'>
                     <h4>Task Discription</h4>
@@ -73,8 +72,8 @@ const Completed = () => {
                   </div>
                 </Card.Body>
               </Card>
+              ))}
             </Col>
-          ))}
         </Row>
       </Container>
     </>
