@@ -1,0 +1,40 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.sideBar__layout--design{
+  position: absolute;
+  top: 230px;
+  left: 0;
+  width: 250px;
+  height: 91vh;
+  margin-top: -150px;
+  overflow: hidden;
+}
+
+
+.sideBar__layout--designContent{
+  transition: .3s all ease-in-out;
+  cursor: pointer;
+}
+/* .sideBar__layout--designContent:hover{
+  background-color: black;
+  color: white;
+} */
+
+.blog__Heading{
+  display: flex;
+  position: relative;
+}
+.TaskdeleteButton{
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
