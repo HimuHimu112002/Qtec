@@ -60,7 +60,8 @@ const AllTask = () => {
         set(push(ref(db, 'completed')),{
           priority: item.priority,
           status: item.status,
-          title: item.title
+          title: item.title,
+          time:item.time
         })
       }).then(()=>{
         remove(ref(db, 'task/' + item.id))
@@ -75,7 +76,8 @@ const AllTask = () => {
       set(push(ref(db, 'Incompleted')),{
         priority: item.priority,
         status: item.status,
-        title: item.title
+        title: item.title,
+        time: item.time
       })
     }).then(()=>{
       remove(ref(db, 'task/' + item.id))
@@ -142,6 +144,7 @@ const AllTask = () => {
   let modelcansel =()=>{
     setmodelShow(false)
   }
+
   return (
     <>
       <RootLayOut></RootLayOut>
@@ -175,7 +178,7 @@ const AllTask = () => {
           </Col>
 
           <Col md='9' className='py-3'>
-          <h4>Search task discriptions Here</h4>
+          <h4>Search task priority Here</h4>
           <input onChange={handleUserListSearch} className='mt-2 px-5 py-3' type="text" placeholder='Search'></input>
 
             {SearchArray.length > 0
@@ -185,7 +188,7 @@ const AllTask = () => {
                 <Card.Body>
                   <div className='blog__Heading'>
                     <h4>{i+1} = Task Discription</h4>
-                    <h4 className='mx-2 bg-info px-4 py-1 rounded text-white'>{item.status}</h4>
+                    <p className='mx-2 bg-info px-4 mt-1 rounded text-white'>{item.status}</p>
                     <p onClick={()=>handleUpdateTask(item.id)} className='TaskEditeButton bg-info px-3 py-1 m-auto text-white rounded'><BiPencil/></p>
 
                     <p onClick={()=>handleDelete(item.id)} className='TaskdeleteButton bg-info px-3 py-1 m-auto text-white rounded'><AiFillDelete/></p>
@@ -201,6 +204,9 @@ const AllTask = () => {
                     
                     <Button onClick={()=>handleComplete(item)} variant="success">Completed</Button>
                     <Button className='mx-2' onClick={()=>handleInComplete(item)} variant="success">Incompleted</Button>
+
+                    <h5 className='mx-4'>Task Created = {item.time}</h5>
+                    {/* {DateTime} */}
                   </div>
 
                 </Card.Body>
@@ -212,7 +218,7 @@ const AllTask = () => {
                   <Card.Body>
                     <div className='blog__Heading'>
                       <h4> {i+1} = Task Discription</h4>
-                      <h4 className='mx-2 bg-info px-4 py-2 rounded text-white'>{item.status}</h4>
+                      <p className='mx-2 bg-info px-4 mt-1 rounded text-white'>{item.status}</p>
                       <p onClick={()=>handleDelete(item.id)} className='TaskdeleteButton bg-danger px-3 py-1 m-auto text-white rounded'><AiFillDelete/></p>
 
                       <p onClick={()=>handleUpdateTask(item.id)} className='TaskEditeButton bg-danger px-3 py-1 m-auto text-white rounded'><BiPencil/></p>
@@ -228,6 +234,9 @@ const AllTask = () => {
                       
                       <Button onClick={()=>handleComplete(item)} variant="success">Completed</Button>
                       <Button className='mx-2' onClick={()=>handleInComplete(item)} variant="success">Incompleted</Button>
+
+                      <h5 className='mx-4'>Task Created = {item.time}</h5>
+                      
                     </div>
 
                   </Card.Body>

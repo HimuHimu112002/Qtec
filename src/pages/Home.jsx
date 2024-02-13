@@ -24,6 +24,12 @@ const Home = () => {
         setTitle(e.target.value)
         setTitleerror("")
     }
+
+    const today = new Date();
+    const month = today.getMonth()+1;
+    const year = today.getFullYear();
+    const date = today. getDate();
+    const currentDate = month + "/" + date + "/" + year;
       
     let handleSubmit =()=>{
         if(!priority){
@@ -36,7 +42,8 @@ const Home = () => {
         set(push(ref(db, "task")),{
         title:title,
         priority:priority,
-        status: "Pending"
+        status: "Pending",
+        time: currentDate
         }).then(()=>{
             setTimeout(()=>{
                 navigate("/all")

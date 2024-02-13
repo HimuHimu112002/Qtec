@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row,Form } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import RootLayOut from '../components/RootLayOut';
-import { getDatabase, ref, onValue, push, set,update ,remove } from "firebase/database";
+import { getDatabase, ref, onValue,remove } from "firebase/database";
 import { AiFillDelete } from 'react-icons/ai';
 import Swal from 'sweetalert2'
 
 const Completed = () => {
   const db = getDatabase()
   const [UiShow, setUiShow] = useState([]);
-  const [status, seStatus] = useState("");
+
 
   // Show All completed task
   useEffect(()=>{
@@ -57,7 +57,7 @@ const Completed = () => {
                 <Card.Body>
                   <div className='blog__Heading'>
                     <h4>Task Discription</h4>
-                      <h4 className='mx-2 bg-info px-4 text-white py-1 rounded'>Completed</h4>
+                      <p className='mx-2 bg-info px-4 text-white py-1 rounded'>Completed</p>
                     <p onClick={()=>handleDelete(item.id)} className='TaskdeleteButton bg-danger px-3 py-1 m-auto text-white rounded'><AiFillDelete/></p>
                   </div>
                   <p>{item.title}</p>
@@ -67,8 +67,7 @@ const Completed = () => {
                     item.priority === "medium"?
                     <Button className="mx-2" variant="primary">{item.priority}</Button>:
                     <Button className="mx-2" variant="danger">{item.priority}</Button>}
-                    
-                    <Button className='mx-2' variant="success">Incompleted</Button>
+                    <h5 className='mx-4'>Task Created = {item.time}</h5>
                   </div>
                 </Card.Body>
               </Card>
